@@ -16,7 +16,18 @@
       L.control.attribution({prefix: false}).addTo(map);
       var tilesource_layer = L.tileLayer('https://Ldepablo11.github.io/Lab3/Tiles/{z}/{x}/{y}.png', 
                                          {minZoom: 13, maxZoom: 15, tms: false, attribution: 'Created by QGIS'}).addTo(map);
-      var bus = new L.geoJson(bus).addTo(map);
+      var bus = new L.geoJson(bus, {
+        pointToLayer: function(feature, ll){
+				return L.circleMarker(ll, {
+					color: '#000000',
+					opacity: 1,
+					weight: 2,
+					fillColor: '#808080',
+					fillOpacity: .5,
+					radius: 10
+					});
+				}
+}).addTo(map)
     </script>
   </body>
 </html>
