@@ -33,7 +33,7 @@
             ], function (Map, MapView, FeatureLayer, TimeSlider, Legend) {
 
                 const popupTemplate = {
-                    title: "this event took place at {eventTime}",
+                    title: "this event took place on {eventTime}",
                     content: [
                         {
                             type: "fields",
@@ -49,6 +49,14 @@
                                 {
                                     fieldName: "alert",
                                     label: "Alert Level",
+                                    format: {
+                                        places: 0,
+                                        digitSeparator: true
+                                    }
+                                },
+                                {
+                                    fieldName: "mmi",
+                                    label: "mmi",
                                     format: {
                                         places: 0,
                                         digitSeparator: true
