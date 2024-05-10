@@ -30,12 +30,14 @@
     <div id="map"></div>
     <script>
       function getColorFor(value) {
-        return value >= 9 ? '#2166ac':
+        return value >= 15 ? '#145392':
+          value >= 9 ? '#2166ac':
           value >= 6 ? '#549ec9':
           value >= 2 ? '#bedaea':
           value >= -2 ? '#ffffbf':
           value >= -6 ? '#fddbc7':
           value >= -9 ? '#ef8a62':
+          value >= -15 ? '#eb7140':
           '#b2182b';
       }
       
