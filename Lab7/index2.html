@@ -74,7 +74,6 @@
                 pointToLayer: function (data, latlng) {
                     var diff = (data.properties.Flow);
                     return L.circleMarker(latlng, {
-                        stroke: 1,
                         radius: Math.abs(data.properties.DIFF),
                         color: getColorFor(data.properties.DIFF),
                         fillColor: getColorFor(data.properties.DIFF),
