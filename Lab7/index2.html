@@ -65,10 +65,10 @@
 
             var timelineControl = L.timelineSliderControl({
                 formatOutput: function (date) {
-                    return new Date(date).toString();
+                    return new Date(date).toLocaleDateString();
                 },
             });
-
+            
             var timeline = L.timeline(data, {
                 getInterval: getInterval,
                 pointToLayer: function (data, latlng) {
