@@ -61,34 +61,36 @@
         function calcRadius(val) {
             return 1.0083 * Math.pow(val/minValue,0.5716)*minRadius;
         }
-        
+
         function onLoadData(data) {
-            timeline = L.timeline(data, {
-                style: function (data) {
-                    return {
-                        stroke: false,
-                        color: getColorFor(data.properties.DIFF),
-                        fillOpacity: 0.9,
-                    };
-                },
-                waitToUpdateMap: true,
-                onEachFeature: function (feature, layer) {
-                    layer.bindTooltip('<h3>'+ feature.properties.NAME + '</h3> <p>' + ' <br>Biden: <strong>' +
-                        feature.properties.DEM + '</strong> <br>Trump: <strong>' + feature.properties.REP + '</strong></p>');
-                    },
-                });
-            
-            timelineControl = L.timelineSliderControl({
+            var getInterval = function (elec) {
+                return {
+                    start: elec.properties.start,
+                    end: elec.properties.end,
+                };
+            };
+
+            var timelineControl = L.timelineSliderControl({
                 formatOutput: function (date) {
-                    return new Date(date).toLocaleDateString();
+                    return new Date(date).toString();
                 },
-                enableKeyboardControls: true,
             });
-            
-            timeline.addTo(map);
-            
+
+            var timeline = L.timeline(data, {
+                getInterval: getInterval,
+                pointToLayer: function (data, latlng) {
+                    var diff = (data.properties.Flow);
+                    return L.circleMarker(latlng, {
+                        stroke: 1,
+                        radius: Math.abs(data.properties.DIFF),
+                        color: getColorFor(data.properties.DIFF),
+                        fillColor: getColorFor(data.properties.DIFF),
+                    }).bindTooltip('<h3>'+ data.properties.NAME + '</h3> <p>' + ' <br>Biden: <strong>' + data.properties.DEM + '</strong> <br>Trump: <strong>' + data.properties.REP + '</strong></p>');
+                },
+            });
             timelineControl.addTo(map);
-            
+            timelineControl.addTimelines(timeline);
+            timeline.addTo(map);
             timelineControl.addTimelines(timeline);
         }
     </script>
