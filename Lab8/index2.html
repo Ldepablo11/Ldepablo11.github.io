@@ -32,9 +32,11 @@
         });
 
         var onEachFeature = function(feature, layer) {
-            if (feature.properties && feature.properties.name) {
-                var popupContent = '<h3>' + feature.properties.name + '</h3>';
-                layer.bindPopup(popupContent, {maxWidth: "auto"});
+            if (feature.properties) {
+                var prop = feature.properties;
+                var popup = '<h3>' + prop['name'] + '</h3>' + '<h4>' + prop['time'] + '</h4>';
+                feature.layer = layer;
+                layer.bindPopup(popup}, {maxWidth: "auto"});
             }
         };
 
@@ -115,17 +117,13 @@
             threshold: 0.5,
             showResultFct: function(feature, container) {
                 props = feature.properties;
-                var nameElement = L.DomUtil.create('b', null, container);
-                nameElement.innerHTML = props.name;
-                container.appendChild(nameElement);
-
+                var name = L.DomUtil.create('b', null, container);
+                name.innerHTML = props.name;
                 container.appendChild(L.DomUtil.create('br', null, container));
 
-                var timeInfo = props.time
-                if (timeInfo) {
-                    var timeElement = document.createTextNode('Time: ' + timeInfo);
-                    container.appendChild(timeElement);
-                }
+                var cat = props.name ? props.name : propts.time,
+                    info = cat;
+                container.appendChild(document.createTextNode(info));
             }
         };
         
