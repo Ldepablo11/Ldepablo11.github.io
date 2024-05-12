@@ -1,8 +1,4 @@
 var BrintonJson = [
-{
-"type": "FeatureCollection",
-"name": "Lab8",
-"features": [
 { "type": "Feature", "properties": { "name": "Masonic Opera House: What Cheer, IA", "latitude": 41.401397, "longitude": -92.354629, "time": "1/1/1904" }, "geometry": null },
 { "type": "Feature", "properties": { "name": "Masonic Opera House: What Cheer, IA", "latitude": 41.401397, "longitude": -92.354629, "time": "1/2/1904" }, "geometry": null },
 { "type": "Feature", "properties": { "name": "Montezuma Opera House: Montezuma, IA", "latitude": 41.584878, "longitude": -92.527431, "time": "1/4/1904" }, "geometry": null },
@@ -1287,6 +1283,4 @@ var BrintonJson = [
 { "type": "Feature", "properties": { "name": "Opera House", "latitude": 41.580281, "longitude": -92.374907, "time": "12/16/1908" }, "geometry": null },
 { "type": "Feature", "properties": { "name": "Opera House", "latitude": 41.178903, "longitude": -92.251849, "time": "12/17/1908" }, "geometry": null },
 { "type": "Feature", "properties": { "name": "Opera House", "latitude": 41.198372, "longitude": -92.093089, "time": "12/18/1908" }, "geometry": null }
-]
-}
 ];
