@@ -14,7 +14,7 @@
         <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
         <link rel="stylesheet"href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css">
         <script src="https://dsps.lib.uiowa.edu/placing/public/jqueryUiTouchPunch-0.2.2/jquery.ui.touch-punch.min.js"></script>
-        <script src="https://dsps.lib.uiowa.edu/placing/omadata.js"></script>
+        <script src="https://Ldepablo11.github.io/Lab8/Lab8.geojson"></script>
         <link rel="stylesheet" type="text/css"href="https://dsps.lib.uiowa.edu/placing/css/style.css">
         <link rel="stylesheet" type="text/css"href="https://dsps.lib.uiowa.edu/placing/css/navwrap.css">
     </head>
@@ -32,14 +32,9 @@
         });
 
         var onEachFeature = function(feature, layer) {
-            if (feature.properties) {
-                var prop = feature.properties;
-                var popup = '<h3>'+prop['FNAME']+''+prop['LNAME']+'</h3>'+'<strong>Race/Gender: </strong>'+
-                prop['RACE']+''+prop['GENDER']+'<br><strong>Occupation:</strong>'+prop['OCCUPATION']+'<br><strong>Age:</strong>'+
-                prop['AGE']+'<br><strong>Family Estate: $</strong>'+prop['PERSREAL']+'<br><strong>Fam. Real Estate: $</strong>'+
-                prop['FAMREAL']+'<br><strong>Address:</strong>'+prop['ADDRESS']+'<br><br><i>details from Census Bureau and citydirectories</i>';
-                feature.layer = layer;
-                layer.bindPopup(popup, {maxWidth: "auto"});
+            if (feature.properties && feature.properties.name) {
+                var popupContent = '<h3>' + feature.properties.name + '</h3>';
+                layer.bindPopup(popupContent, {maxWidth: "auto"});
             }
         };
 
