@@ -73,21 +73,21 @@
             popupAnchor: [-1, -1]
         });
 
-        var firstlayer = L.geoJson(omaJson, {
+        var firstlayer = L.geoJson(BrintonJson, {
             onEachFeature: onEachFeature,
             pointToLayer: function(feature, latlng) {
                 return L.circleMarker(latlng, blueCircleMarkers);
             }
         }).addTo(map);
             
-        var timelineLayer = L.geoJson(omaJson, {
+        var timelineLayer = L.geoJson(BrintonJson, {
             onEachFeature: onEachFeature,
             pointToLayer: function(feature, latlng) {
                 return L.circleMarker(latlng, orangeCircleMarkers);
             }
         });
         
-        var searchLayer = L.geoJson(omaJson, {
+        var searchLayer = L.geoJson(BrintonJson, {
             onEachFeature: onEachFeature,
             pointToLayer: function(feature, latlng) {
                 return L.circleMarker(latlng, greenCircleMarkers);
@@ -115,12 +115,17 @@
             threshold: 0.5,
             showResultFct: function(feature, container) {
                 props = feature.properties;
-                var name = L.DomUtil.create('b', null, container);
-                name.innerHTML = props.LNAME;
+                var nameElement = L.DomUtil.create('b', null, container);
+                nameElement.innerHTML = props.name;
+                container.appendChild(nameElement);
+
                 container.appendChild(L.DomUtil.create('br', null, container));
-                var cat = props.LNAME ? props.FNAME : props.OCCUPATION,
-                info = cat;
-                container.appendChild(document.createTextNode(info));
+
+                var timeInfo = props.time
+                if (timeInfo) {
+                    var timeElement = document.createTextNode('Time: ' + timeInfo);
+                    container.appendChild(timeElement);
+                }
             }
         };
         
@@ -128,9 +133,9 @@
         
         map.addControl(searchControl);
         
-        searchControl.indexFeatures(omaJson, ['LNAME']);
+        searchControl.indexFeatures(BrintonJson, ['name']);
         
-        displayFeatures(omaJson, searchLayer);
+        displayFeatures(BrintonJson, searchLayer);
         
         function displayFeatures(features, layer) {
             var popup = L.DomUtil.create('div', 'tiny-popup', map.getContainer());
