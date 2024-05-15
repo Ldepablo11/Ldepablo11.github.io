@@ -1,0 +1,49 @@
+Liberto De Pablo                                                                           Spring 2024
+GISC 27105 - Web Mapping
+Assignment 7
+
+
+Question 1
+The data field being used to determine color in the map is the properties.DIFF feature.
+
+
+Question 2
+In order to create an intermediate break with a light blue color when value at 3, I would rewrite the function GetColorFor() function from:
+
+
+function getColorFor(value) {
+        return value >= 13 ? '#145392':
+          value >= 9 ? '#2166ac':
+          value >= 6 ? '#549ec9':
+          value >= 2 ? '#bedaea':
+          value >= -2 ? '#ffffbf':
+          value >= -6 ? '#fddbc7':
+          value >= -9 ? '#ef8a62':
+          value >= -13 ? '#eb7140':
+          '#b2182b';
+      }
+
+To include another break at 3:
+
+
+      function getColorFor(value) {
+        return value >= 13 ? '#145392':
+          value >= 9 ? '#2166ac':
+          value >= 6 ? '#549ec9':
+          value >= 3 ? '#62a9e3':
+          value >= 2 ? '#bedaea':
+          value >= -2 ? '#ffffbf':
+          value >= -6 ? '#fddbc7':
+          value >= -9 ? '#ef8a62':
+          value >= -13 ? '#eb7140':
+          '#b2182b';
+      }
+
+
+
+Question 3
+The fact that there is no legend might confuse audiences. Instead of knowing directly what the different color breaks represent, viewers will have to infer the color scheme from hovering over different states in order to understand what the map means. Following this logic, the significance of the timeline may confuse audiences since they are not immediately aware of the fact that certain states have their votes and polling at different times. The pop ups could include the start and end dates of the current polling/electoral cycle. The pop ups could also include information about what numbers are being represented. It would be helpful hanging the popup text to: Trump votes & Biden votes. Additionally, the states of Alaska and Hawaii are not directly visible, forcing users to move up north or into the Pacific Ocean. 
+
+
+Question 4
+Scaling a radius for symbols can represent the proportionality of a feature, however, it can be visually difficult to interpret the proportionality. Using Flannery’s compensation can help mitigate this issue. When using circles to represent proportionality, it is likely that circles will overlap each other, making it difficult to visualize where circles are centered and how they may be proportionally sized differently.
