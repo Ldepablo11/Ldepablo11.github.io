@@ -34,7 +34,7 @@
         var onEachFeature = function(feature, layer) {
             if (feature.properties) {
                 var prop = feature.properties;
-                var popup = '<h3>' + prop['name'] + '</h3>' + '<h4>' + prop['time'] + '</h4>';
+                var popup = '<h3>' + prop['name'] + prop['time'] + '</h3>';
                 feature.layer = layer;
                 layer.bindPopup(popup, {maxWidth: "auto"});
             }
