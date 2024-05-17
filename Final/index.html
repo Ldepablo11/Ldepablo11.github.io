@@ -39,7 +39,7 @@
       var map = L.map("map", {
         layers: [background],
         center: new L.LatLng(41.91194146041064, -87.65960950432675),
-        zoom: 11,
+        zoom: 12,
       });
 
       function style(feature){
@@ -48,7 +48,7 @@
 		      weight: 2,
 		      opacity: 1,
 		      color: 'gray',
-		      fillOpacity: Math.min(feature.properties.Data_index / 100, 1)
+		      fillOpacity: feature.properties.Data_index
 	      };
       }
 
