@@ -44,6 +44,22 @@
         zoom: 11,
       });
 
+      var info = L.control();
+
+      info.onAdd = function (map) {
+	      this._div = L.DomUtil.create('div', 'info');
+	      this.update();
+	      return this._div;
+      };
+	    
+      info.update = function (props) {
+	      this._div.innerHTML = '<h4>Chicago Transport Data</h4>' +  (props ?
+									  '<b>' + props.name + '</b><br />' + 
+									  props.description : 'Hover over an area');
+      };
+	    
+      info.addTo(map);
+
       function style(feature){
 	      return {
 		      fillColor: "#000C66",
@@ -78,6 +94,13 @@
 		      mouseover: highlightFeature,
 		      mouseout: resetHighlight
 	      });
+	      if (feature.properties) {
+		      var popupContent = "<h4>Details</h4>";
+		      popupContent += feature.properties.name ? "<b>Name: </b>" + feature.properties.name + "<br/>" : "";
+		      popupContent += feature.properties.description ? "<b>Description: </b>" + feature.properties.description : "";
+
+		      layer.bindPopup(popupContent);
+	      }
       }
 	    
       var chicago = new L.geoJson(transit, {
