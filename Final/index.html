@@ -54,42 +54,22 @@
 	      zoom: 11,
       });
 
-      var variables = ["Data_DP03", "Data_DP_01", "Data_index"];
-
-      var opacityControl = L.control({position: 'bottomright'});
-
-      opacityControl.onAdd = function (map) {
-	      var div = L.DomUtil.create('div', 'opacity-control');
-	      div.innerHTML = '<h4>Select Opacity Variable:</h4><br>';
+      function style(feature) {
+	      var opacityProperty;
+	      if (selectedVariable === 'Data_DP03') {
+		      opacityProperty = feature.properties.Data_DP03;
+	      } else if (selectedVariable === 'Data_DP_01') {
+		      opacityProperty = feature.properties.Data_DP_01;
+	      } else if (selectedVariable === 'Data_index') {
+		      opacityProperty = feature.properties.Data_index;
+	      }
 	      
-	      variables.forEach(function (variable) {
-		      div.innerHTML += '<input type="radio" name="opacity" value="' + variable + '"> ' + variable + '<br>';
-	      });
-	      
-	      div.addEventListener('change', function (e) {
-		      var selectedVariable = e.target.value;
-		      updateOpacity(selectedVariable);
-	      });
-	      
-	      return div;
-      };
-
-      opacityControl.addTo(map);
-
-      var selectedVariable = 'Data_index';
-
-      function updateOpacity(variable) {
-	      selectedVariable = variable;
-	      chicago.setStyle(style);
-      }
-
-      function style(feature){
 	      return {
 		      fillColor: "#000C66",
 		      weight: 2,
 		      opacity: 1,
 		      color: 'black',
-		      fillOpacity: feature.properties[selectedVariable]
+		      fillOpacity: opacityProperty
 	      };
       }
 
