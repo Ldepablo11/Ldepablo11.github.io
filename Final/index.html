@@ -111,10 +111,12 @@
 	      }
       }
 	    
-      var chicago = new L.geoJson(transit, {
-	      style:style,
-      	      onEachFeature: onEachFeature
-      }).addTo(map);
+      function onLoadData(transit) {
+	      var chicago = new L.geoJson(transit, {
+		      style: style,
+		      onEachFeature: onEachFeature
+	      }).addTo(map);
+      }
     </script>
   </body>
 </html>
