@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
     <script src="https://skeate.dev/Leaflet.timeline/examples/leaflet.timeline.js"></script>
+    <script src="https://dsps.lib.uiowa.edu/placing/public/fuse-1.2.1/fuse.min.js"></script>
+    <script src="https://dsps.lib.uiowa.edu/placing/public/leafletFuseSearch-noVersion/leafletfuse.js"></script>
+    <link rel="stylesheet"href="https://dsps.lib.uiowa.edu/placing/public/leafletFuseSearch-noVersion/leafletfuse.css" type="text/css"/>
     <script src="https://Ldepablo11.github.io/Final/Mismatch.js"></script>
     <style>
       html,
@@ -120,6 +123,33 @@
 	      style: style,
       	      onEachFeature: onEachFeature
       }).addTo(map);
+
+      var searchLayer = L.geoJson(transit, {
+	      onEachFeature: onEachFeature
+      });
+
+      var searchOptions = {
+	      position: 'topleft',
+	      title: 'Search',
+	      placeholder: 'Search by Census Tract Name',
+	      maxResultLength: 10,
+	      caseSensitive: false,
+	      showInvisibleFeatures: true,
+	      layerToToggle: searchLayer,
+	      threshold: 0.5,
+	      showResultFct: function(feature, container) {
+		      var props = feature.properties;
+		      var name = L.DomUtil.create('b', null, container);
+		      name.innerHTML = props.Data_name10;
+		      container.appendChild(L.DomUtil.create('br', null, container));
+	      }
+      };
+
+      var searchControl = L.control.fuseSearch(searchOptions);
+
+      map.addControl(searchControl);
+
+      searchControl.indexFeatures(transit, ['properties.Data_name10']);
 
     </script>
   </body>
