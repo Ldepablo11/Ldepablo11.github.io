@@ -104,9 +104,20 @@
 	      layer.bindTooltip('<h3>Census Tract ' + properties.Data_name10 + '</h3>');
       }
 
+      function bindPopup(layer, properties) {
+	      layer.bindPopup('<h3>Census Tract ' + properties.Data_name10 + '</h3><p>' +
+			      'Unemployment Rate: <strong>' + properties.Data_DP03 + '%</strong><br>' +
+			      'Share of Public Transit Commuters: <strong>' + properties.Data_DP_01 + '%</strong><br>' +
+			      'Vulnerability Index: <strong>' + properties.Data_index + '</strong></p>');
+      }
+
       function onEachFeature(feature, layer) {
 	      if (feature.properties) {
 		      bindTooltip(layer, feature.properties);
+		      bindPopup(layer, feature.properties);
+		      layer.on('click', function () {
+			      layer.openPopup();
+		      });
 	      }
       }
 	    
