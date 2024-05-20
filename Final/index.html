@@ -75,39 +75,23 @@
 	      };
       }
 
-      function highlightFeature(e) {
-	      var layer = e.target;
-	      layer.setStyle({
-		      weight: 5,
-		      color: '#666',
-		      dashArray: '',
-		      fillOpacity: 0.7
-	      });
-	      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-		      layer.bringToFront();
-	      }
-	      info.update(layer.feature.properties);
-      }
-
-      function resetHighlight(e) {
-	      console.log("Resetting highlight...");
-	      console.log("geojson:", geojson);
-	      console.log("e.target:", e.target);
-	      geojson.resetStyle(e.target);
-	      info.update();
-      }
-
       function onEachFeature(feature, layer) {
 	      layer.on({
-		      mouseover: highlightFeature,
-		      mouseout: resetHighlight
+		      click: function (e) {
+			      var popupContent = "<h3>Census Tract " + feature.properties.Data_name10 + "</h3>";
+			      popupContent += feature.properties.Data_DP03 ? "<b>Unemployment Rate: </b>" + feature.properties.Data_DP03 + "%" + "<br/>" : "";
+			      popupContent += feature.properties.Data_DP_01 ? "<b>Share of Public Transit Commuters: </b>" + feature.properties.Data_DP_01 + "%" + "<br/>" : "";
+			      popupContent += feature.properties.Data_index ? "<b>Vulnerability Index: </b>" + feature.properties.Data_index + "<br/>" : "";
+			      
+			      layer.bindPopup(popupContent).openPopup();
+		      }
 	      });
+	      
 	      if (feature.properties) {
-		      var popupContent = feature.properties.Data_name10 ? "<h3>" + "Census Tract " + feature.properties.Data_name10 + "</h3>" : "<h3>Unknown Name</h3>";
+		      var popupContent = "<h3>Census Tract " + feature.properties.Data_name10 + "</h3>";
 		      popupContent += feature.properties.Data_DP03 ? "<b>Unemployment Rate: </b>" + feature.properties.Data_DP03 + "%" + "<br/>" : "";
 		      popupContent += feature.properties.Data_DP_01 ? "<b>Share of Public Transit Commuters: </b>" + feature.properties.Data_DP_01 + "%" + "<br/>" : "";
 		      popupContent += feature.properties.Data_index ? "<b>Vulnerability Index: </b>" + feature.properties.Data_index + "<br/>" : "";
-
 		      layer.bindPopup(popupContent);
 	      }
       }
