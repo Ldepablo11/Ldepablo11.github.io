@@ -84,9 +84,9 @@
       function style(feature) {
 	      var opacityProperty;
 	      if (selectedVariable === 'Data_DP03') {
-		      opacityProperty = feature.properties.Data_DP03;
+		      opacityProperty = feature.properties.Data_DP03 \ 100;
 	      } else if (selectedVariable === 'Data_DP_01') {
-		      opacityProperty = feature.properties.Data_DP_01;
+		      opacityProperty = feature.properties.Data_DP_01 \ 100;
 	      } else if (selectedVariable === 'Data_index') {
 		      opacityProperty = feature.properties.Data_index;
 	      }
