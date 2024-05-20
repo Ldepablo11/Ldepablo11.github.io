@@ -25,13 +25,14 @@
         margin: 0;
         margin-bottom: 15px;
       }
-      .info { padding: 6px 8px; 
-	     font: 14px/16px Arial, Helvetica, sans-serif; 
-	     background: white; background: rgba(255,255,255,0.8); 
-	     box-shadow: 0 0 15px rgba(0,0,0,0.2); 
-	     border-radius: 5px; }
-      .info h4 { margin: 0 0 5px; 
-		color: #777; }
+      .leaflet-bottom.leaflet-right {
+            text-align: right;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
   </head>
   <body>
@@ -49,21 +50,34 @@
         zoom: 11,
       });
 
-      var info = L.control();
+      var variables = ["Data_DP03", "Data_DP_01", "Data_index"];
 
-      info.onAdd = function (map) {
-	      this._div = L.DomUtil.create('div', 'info');
-	      this.update();
-	      return this._div;
+      var opacityControl = L.control({position: 'bottomright'});
+
+      opacityControl.onAdd = function (map) {
+	      var div = L.DomUtil.create('div', 'opacity-control');
+	      div.innerHTML = '<h4>Select Opacity Variable:</h4><br>';
+	      
+	      variables.forEach(function (variable) {
+		      div.innerHTML += '<input type="radio" name="opacity" value="' + variable + '"> ' + variable + '<br>';
+	      });
+	      
+	      div.addEventListener('change', function (e) {
+		      var selectedVariable = e.target.value;
+		      updateOpacity(selectedVariable);
+	      });
+	      
+	      return div;
       };
-	    
-      info.update = function (props) {
-	      this._div.innerHTML = '<h4>Chicago Transport Data</h4>' +  (props ?
-									  '<b>' + props.name + '</b><br />' + 
-									  props.description : 'Hover over an area');
-      };
-	    
-      info.addTo(map);
+
+      opacityControl.addTo(map);
+
+      var selectedVariable = 'Data_index';
+
+      function updateOpacity(variable) {
+	      selectedVariable = variable;
+	      chicago.setStyle(style);
+      }
 
       function style(feature){
 	      return {
@@ -71,27 +85,17 @@
 		      weight: 2,
 		      opacity: 1,
 		      color: 'black',
-		      fillOpacity: feature.properties.Data_index
+		      fillOpacity: feature.properties[selectedVariable]
 	      };
       }
 
       function onEachFeature(feature, layer) {
-	      layer.on({
-		      click: function (e) {
-			      var popupContent = "<h3>Census Tract " + feature.properties.Data_name10 + "</h3>";
-			      popupContent += feature.properties.Data_DP03 ? "<b>Unemployment Rate: </b>" + feature.properties.Data_DP03 + "%" + "<br/>" : "";
-			      popupContent += feature.properties.Data_DP_01 ? "<b>Share of Public Transit Commuters: </b>" + feature.properties.Data_DP_01 + "%" + "<br/>" : "";
-			      popupContent += feature.properties.Data_index ? "<b>Vulnerability Index: </b>" + feature.properties.Data_index + "<br/>" : "";
-			      
-			      layer.bindPopup(popupContent).openPopup();
-		      }
-	      });
-	      
 	      if (feature.properties) {
 		      var popupContent = "<h3>Census Tract " + feature.properties.Data_name10 + "</h3>";
 		      popupContent += feature.properties.Data_DP03 ? "<b>Unemployment Rate: </b>" + feature.properties.Data_DP03 + "%" + "<br/>" : "";
 		      popupContent += feature.properties.Data_DP_01 ? "<b>Share of Public Transit Commuters: </b>" + feature.properties.Data_DP_01 + "%" + "<br/>" : "";
 		      popupContent += feature.properties.Data_index ? "<b>Vulnerability Index: </b>" + feature.properties.Data_index + "<br/>" : "";
+		      
 		      layer.bindPopup(popupContent);
 	      }
       }
