@@ -100,7 +100,7 @@
 		      mouseout: resetHighlight
 	      });
 	      if (feature.properties) {
-		      var popupContent = feature.properties.Data_name10 ? "<h3>" + feature.properties.Data_name10 + "</h3>" : "<h3>Unknown Name</h3>";
+		      var popupContent = feature.properties.Data_name10 ? "<h3>" + "Census Tract " + feature.properties.Data_name10 + "</h3>" : "<h3>Unknown Name</h3>";
 		      popupContent += feature.properties.Data_DP03 ? "<b>Unemployment Rate: </b>" + feature.properties.Data_DP03 + "%" + "<br/>" : "";
 		      popupContent += feature.properties.Data_DP_01 ? "<b>Share of Public Transit Commuters: </b>" + feature.properties.Data_DP_01 + "%" + "<br/>" : "";
 		      popupContent += feature.properties.Data_index ? "<b>Vulnerability Index: </b>" + feature.properties.Data_index + "<br/>" : "";
