@@ -108,10 +108,16 @@
       }
 
       function bindPopup(layer, properties) {
-	      layer.bindPopup('<h3>Census Tract ' + properties.Data_name10 + '</h3><p>' +
+	      var content = '<h3>Census Tract ' + properties.Data_name10 + '</h3>';
+	      if (properties.Data_DP03 === 0 && properties.Data_DP_01 === 0 && properties.Data_index === 0) {
+		      content += '<p>Insufficient data</p>';
+	      } else {
+		      content += '<p>' +
 			      'Unemployment Rate: <strong>' + properties.Data_DP03 + '%</strong><br>' +
 			      'Share of Public Transit Commuters: <strong>' + properties.Data_DP_01 + '%</strong><br>' +
-			      'Vulnerability Index: <strong>' + properties.Data_index + '</strong></p>');
+			      'Vulnerability Index: <strong>' + properties.Data_index + '</strong></p>';
+	      }
+	      layer.bindPopup(content);
       }
 
       function onEachFeature(feature, layer) {
