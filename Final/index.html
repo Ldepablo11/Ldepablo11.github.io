@@ -95,9 +95,10 @@
 		      mouseout: resetHighlight
 	      });
 	      if (feature.properties) {
-		      var popupContent = "<h4>Details</h4>";
-		      popupContent += feature.properties.name ? "<b>Name: </b>" + feature.properties.name + "<br/>" : "";
-		      popupContent += feature.properties.description ? "<b>Description: </b>" + feature.properties.description : "";
+		      var popupContent = feature.properties.Data_name10 ? "<h3>" + feature.properties.Data_name10 + "</h3>" : "<h3>Unknown Name</h3>";
+		      popupContent += feature.properties.Data_DP03 ? "<b>Data Employment: </b>" + feature.properties.Data_DP03 + "<br/>" : "";
+		      popupContent += feature.properties.Data_DP_01 ? "<b>Data Population: </b>" + feature.properties.Data_DP_01 + "<br/>" : "";
+		      popupContent += feature.properties.Data_index ? "<b>Data Index: </b>" + feature.properties.Data_index + "<br/>" : "";
 
 		      layer.bindPopup(popupContent);
 	      }
