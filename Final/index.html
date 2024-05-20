@@ -90,6 +90,9 @@
       }
 
       function resetHighlight(e) {
+	      console.log("Resetting highlight...");
+	      console.log("geojson:", geojson);
+	      console.log("e.target:", e.target);
 	      geojson.resetStyle(e.target);
 	      info.update();
       }
