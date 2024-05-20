@@ -25,8 +25,13 @@
         margin: 0;
         margin-bottom: 15px;
       }
-      .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; }
-      .info h4 { margin: 0 0 5px; color: #777; }
+      .info { padding: 6px 8px; 
+	     font: 14px/16px Arial, Helvetica, sans-serif; 
+	     background: white; background: rgba(255,255,255,0.8); 
+	     box-shadow: 0 0 15px rgba(0,0,0,0.2); 
+	     border-radius: 5px; }
+      .info h4 { margin: 0 0 5px; 
+		color: #777; }
     </style>
   </head>
   <body>
@@ -96,9 +101,9 @@
 	      });
 	      if (feature.properties) {
 		      var popupContent = feature.properties.Data_name10 ? "<h3>" + feature.properties.Data_name10 + "</h3>" : "<h3>Unknown Name</h3>";
-		      popupContent += feature.properties.Data_DP03 ? "<b>Data Employment: </b>" + feature.properties.Data_DP03 + "<br/>" : "";
-		      popupContent += feature.properties.Data_DP_01 ? "<b>Data Population: </b>" + feature.properties.Data_DP_01 + "<br/>" : "";
-		      popupContent += feature.properties.Data_index ? "<b>Data Index: </b>" + feature.properties.Data_index + "<br/>" : "";
+		      popupContent += feature.properties.Data_DP03 ? "<b>Unemployment Rate: </b>" + feature.properties.Data_DP03 + "%" + "<br/>" : "";
+		      popupContent += feature.properties.Data_DP_01 ? "<b>Share of Public Transit Commuters: </b>" + feature.properties.Data_DP_01 + "%" + "<br/>" : "";
+		      popupContent += feature.properties.Data_index ? "<b>Vulnerability Index: </b>" + feature.properties.Data_index + "<br/>" : "";
 
 		      layer.bindPopup(popupContent);
 	      }
