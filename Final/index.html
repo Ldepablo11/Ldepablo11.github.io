@@ -101,10 +101,7 @@
       }
 
       function bindTooltip(layer, properties) {
-	      layer.bindTooltip('<h3>' + properties.Data_name10 + '</h3>' +
-				'<p>Unemployment Rate: <strong>' + (properties.Data_DP03 || 'N/A') + '%</strong><br>' +
-				'Share of Public Transit Commuters: <strong>' + (properties.Data_DP_01 || 'N/A') + '%</strong><br>' +
-				'Vulnerability Index: <strong>' + (properties.Data_index || 'N/A') + '</strong></p>');
+	      layer.bindTooltip('<h3>Census Tract ' + properties.Data_name10 + '</h3>');
       }
 
       function onEachFeature(feature, layer) {
