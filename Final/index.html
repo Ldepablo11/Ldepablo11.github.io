@@ -54,6 +54,33 @@
 	      zoom: 11,
       });
 
+      var variables = ["Data_DP03", "Data_DP_01", "Data_index"];
+	    
+      var opacityControl = L.control({position: 'bottomright'});
+	    
+      opacityControl.onAdd = function (map) {
+	      var div = L.DomUtil.create('div', 'leaflet-bar opacity-control');
+	      div.innerHTML = '<h4>Select Opacity Variable:</h4>';
+	      variables.forEach(function (variable) {
+		      div.innerHTML += '<input type="radio" name="opacity" value="' + variable + '"> ' + variable + '<br>';
+	      });
+	      
+	      div.addEventListener('change', function (e) {
+		      var selectedVariable = e.target.value;
+		      updateOpacity(selectedVariable);
+	      });
+	      return div;
+      };
+	    
+      opacityControl.addTo(map);
+      
+      var selectedVariable = 'Data_index';
+
+      function updateOpacity(variable) {
+	      selectedVariable = variable;
+	      chicago.setStyle(style);
+      }
+
       function style(feature) {
 	      var opacityProperty;
 	      if (selectedVariable === 'Data_DP03') {
