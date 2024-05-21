@@ -168,8 +168,8 @@
       searchControl.indexFeatures(transit, ['Data_name10']);
 
       var timelineControl = L.timelineSliderControl({
-	      formatOutput: function (date) {
-		      var d = new Date(date * 1000);
+	      formatOutput: function (time) {
+		      var d = new Date(time * 1000);
 		      return d.toLocaleDateString('en-US', {
 			      year: 'numeric',
 			      month: 'short',
