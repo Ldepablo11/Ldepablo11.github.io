@@ -167,6 +167,34 @@
 
       searchControl.indexFeatures(transit, ['Data_name10']);
 
+      function onLoadData(data) {
+	      var getInterval = function (data) {
+		      return {
+			      start: data.properties.start,
+			      end: data.properties.end,
+		      };
+	      };
+	      
+	      var timeline = L.timelineSliderControl({
+		      formatOutput: function (time) {
+			      var d = new Date(date * 1000);
+			      return d.toLocaleDateString('en-US', {
+				      year: 'numeric',
+				      month: 'short',
+				      day: 'numeric',
+				      timeZone: 'UTC'
+			      });
+		      },
+		      duration: 150000
+	      });
+
+	      var timeline = L.timeline(data, {
+		      getInterval: getInterval
+	      });
+	      timelineControl.addTo(map);
+	      timelineControl.addTimelines(timeline);
+	      timeline.addTo(map);
+      };
     </script>
   </body>
 </html>
