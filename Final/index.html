@@ -193,9 +193,9 @@
 		      container.appendChild(L.DomUtil.create('br', null, container));
 		      var cat = 'Unemployment Rate: ' + (props.Data_DP03 ? props.Data_DP03 + '%' : 'N/A') + '\n' +
 			      'Public Transit Commuters: ' + (props.Data_DP_01 ? props.Data_DP_01 + '%' : 'N/A') + '\n' +
-			      'Vulnerability Index: ' + (props.Data_index ? props.Data_index : 'N/A');
-		      var info = document.createTextNode(cat);
-		      container.appendChild(info);
+			      'Vulnerability Index: ' + (props.Data_index ? props.Data_index : 'N/A'),
+			      info = cat;
+		      container.appendChild(document.createTextNode(info));
 	      }
       };
 
