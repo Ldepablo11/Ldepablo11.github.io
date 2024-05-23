@@ -194,9 +194,7 @@
 		      var name = L.DomUtil.create('b', null, container);
 		      name.innerHTML = props.Data_name10;
 		      container.appendChild(L.DomUtil.create('br', null, container));
-		      var cat = 'Unemployment Rate: ' + (props.Data_DP03 ? props.Data_DP03 + '%' : 'N/A') + '\n' +
-			      'Public Transit Commuters: ' + (props.Data_DP_01 ? props.Data_DP_01 + '%' : 'N/A') + '\n' +
-			      'Vulnerability Index: ' + (props.Data_index ? props.Data_index : 'N/A'),
+		      var cat = props.Data_name10 ? props.Data_name10 : props.Data_name10,
 			      info = cat;
 		      container.appendChild(document.createTextNode(info));
 	      }
