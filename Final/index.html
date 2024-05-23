@@ -43,6 +43,15 @@
 	      border-radius: 5px;
 	      width: 200px;
       }
+      .leaflet-bottom.leaflet-left .data-time-control {
+	      position: absolute;
+	      bottom: 40px;
+	      left: 10px;
+	      background: white;
+	      padding: 10px;
+	      border-radius: 5px;
+	      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      }
     </style>
   </head>
   <body>
@@ -163,15 +172,7 @@
 	      style: style,
       	      onEachFeature: onEachFeature
       }).addTo(map);
-
-      var greenCircleMarkers = {
-	      radius: 5,
-	      fillColor: "#ffff00",
-	      color: "#286933",
-	      weight: 1,
-	      opacity: 1,
-	      fillOpacity: 0.7
-      };
+      
     </script>
   </body>
 </html>
