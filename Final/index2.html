@@ -75,15 +75,16 @@
                 var timeline = L.timeline(data, {
                     getInterval: function(feature) {
                         return {
-                            start: feature.properties.time,
-                            end: feature.properties.time
+                            start: feature.properties.time * 1000,
+                            end: feature.properties.time * 1000 + 1000000
                         };
                     },
                     style: function(data) {
                         return {
-                            stroke: false,
                             color: "#404040",
+                            fillColor: "#ff7800",
                             fillOpacity: 0.9,
+                            weight: 1,
                         };
                     },
                     waitToUpdateMap: true,
