@@ -1,116 +1,136 @@
 <html>
-    <head>
-        <title>Chicago's Spatial Mismatch</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
-        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-        <script src="https://skeate.dev/Leaflet.timeline/examples/leaflet.timeline.js"></script>
-        <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        #map {
-            width: 100vw;
-            height: 100vh;
-        }
-        .leaflet-bottom.leaflet-left {
-            width: 100%;
-        }
-        .leaflet-control-container .leaflet-timeline-controls {
-            box-sizing: border-box;
-            width: 100%;
-            margin: 0;
-            margin-bottom: 15px;
-        }
-        .opacity-control {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            padding: 6px 8px;
-            font: 14px/16px Arial, Helvetica, sans-serif;
-            background: white;
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-            width: 200px;
-        }
-        </style>
-        </head>
-        <body>
-            <div id="map"></div>
-            <script>
-            var background =
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            });
-            
-            var map = L.map("map", {
-                layers: [background],
-                center: new L.LatLng(41.823405912708964, -87.7305608060591),
-                zoom: 11,
-            });
-            
-            var DescriptionControl = L.Control.extend({
-                options: {
-                    position: 'topright'
-                },
-                onAdd: function (map) {
-                    var container = L.DomUtil.create('div', 'leaflet-control-description');
-                    container.style.padding = '6px';
-                    container.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
-                    container.style.borderRadius = '5px';
-                    container.style.boxShadow = '0 0 15px rgba(0, 0, 0, 0.2)';
-                    container.style.maxWidth = '300px';
-                    container.innerHTML = '<h4>Vulnerability Index</h4><p>The vulnerability index represents a higher degree for the mismatch between transit access and employment, lower values indicate lower vulnerability.</p>';
-                    return container;
-                }
-            });
-            
-            map.addControl(new DescriptionControl());
+  <head>
+    <title>Chicago's Spatial Mismatch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://skeate.dev/Leaflet.timeline/examples/leaflet.timeline.js"></script>
+    <script src="https://dsps.lib.uiowa.edu/placing/public/fuse-1.2.1/fuse.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css">
+    <script src="https://dsps.lib.uiowa.edu/placing/public/leafletFuseSearch-noVersion/leafletfuse.js"></script>
+    <link rel="stylesheet" href="https://dsps.lib.uiowa.edu/placing/public/leafletFuseSearch-noVersion/leafletfuse.css" type="text/css"/>
+    <script src="https://Ldepablo11.github.io/Final/Mismatch.js"></script>
+    <style>
+      html, body {
+	      margin: 0;
+	      padding: 0;
+      }
+      #map {
+	      width: 100vw;
+	      height: 100vh;
+      }
+      .leaflet-bottom.leaflet-left {
+	      width: 100%;
+      }
+      .leaflet-control-container .leaflet-timeline-controls {
+	      box-sizing: border-box;
+	      width: 100%;
+	      margin: 0;
+	      margin-bottom: 15px;
+      }
+      .opacity-control {
+	      position: absolute;
+	      bottom: 10px;
+	      right: 10px;
+	      padding: 6px 8px;
+	      font: 14px/16px Arial, Helvetica, sans-serif;
+	      background: white;
+	      background: rgba(255, 255, 255, 0.8);
+	      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+	      border-radius: 5px;
+	      width: 200px;
+      }
+      .data-time-control {
+          position: absolute;
+          bottom: 40px;
+          left: 10px;
+          background: white;
+          padding: 10px;
+          border-radius: 5px;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="opacity-control">
+      <label for="opacity">Layer Opacity:</label>
+      <input type="range" id="opacity" min="0" max="1" step="0.1" value="1" oninput="updateOpacity(this.value)">
+    </div>
+    <script>
+      var background = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+	});
+      
+      var map = L.map("map", {
+	      layers: [background],
+	      center: new L.LatLng(41.823405912708964, -87.7305608060591),
+	      zoom: 11,
+      });
 
-            function onLoadData(data) {
-                var timeline = L.timeline(data, {
-                    getInterval: function(feature) {
-                        return {
-                            start: feature.properties.time * 1000,
-                            end: feature.properties.time * 1000 + 1000000
-                        };
-                    },
-                    style: function(data) {
-                        return {
-                            color: "#404040",
-                            fillColor: "#ff7800",
-                            fillOpacity: 0.9,
-                            weight: 1,
-                        };
-                    },
-                    waitToUpdateMap: true,
-                    onEachFeature: function (feature, layer) {
-                        layer.bindTooltip('<h3>' + feature.properties.Data_name10 + '</h3><p>' + 
-                                          'Unemployment Rate: <strong>' + feature.properties.Data_DP03 + '</strong><br>' +
-                                          'Share of Public Transit Commuters: <strong>' + feature.properties.Data_DP_01 + '</strong></p>');
-                    },
-                });
-                
-                var timelineControl = L.timelineSliderControl({
-                    formatOutput: function (timestamp) {
-                        var date = new Date(timestamp);
-                        return date.toLocaleDateString();
-                    },
-                    enableKeyboardControls: true,
-                    duration: 100000, // Adjust the duration to your needs
-                    autoPlay: true,
-                    showTicks: true
-                });
-                
-                timeline.addTo(map);
-                timelineControl.addTo(map);
-                timelineControl.addTimelines(timeline);
-            }
-            </script>
-            <script src="https://Ldepablo11.github.io/Final/Mismatch.jsonp"></script>
-        </body>
+      var TimeControl = L.Control.extend({
+          options: {
+              position: 'bottomleft'
+          },
+          onAdd: function (map) {
+              var container = L.DomUtil.create('div', 'data-time-control');
+              var label = L.DomUtil.create('label', '', container);
+              label.innerHTML = '<strong>Select Year:</strong><br>';
+
+              var radio2011 = L.DomUtil.create('input', '', container);
+              radio2011.type = 'radio';
+              radio2011.name = 'year';
+              radio2011.value = '2011';
+              radio2011.id = 'year2011';
+              var label2011 = L.DomUtil.create('label', '', container);
+              label2011.htmlFor = 'year2011';
+              label2011.innerHTML = '2011<br>';
+
+              var radio2022 = L.DomUtil.create('input', '', container);
+              radio2022.type = 'radio';
+              radio2022.name = 'year';
+              radio2022.value = '2022';
+              radio2022.id = 'year2022';
+              radio2022.checked = true;
+              var label2022 = L.DomUtil.create('label', '', container);
+              label2022.htmlFor = 'year2022';
+              label2022.innerHTML = '2022';
+
+              container.addEventListener('change', function(e) {
+                  if (e.target.name === 'year') {
+                      updateYearData(e.target.value);
+                  }
+              });
+
+              return container;
+          }
+      });
+      map.addControl(new TimeControl());
+
+      function updateYearData(selectedYear) {
+          var timeValue = selectedYear === '2011' ? 1294729261 : 1641884461;
+          var filteredFeatures = transit.features.filter(function(feature) {
+              return feature.properties.Data_time === timeValue;
+          });
+          map.removeLayer(chicago);
+          chicago = L.geoJson({type: 'FeatureCollection', features: filteredFeatures}, {
+              style: style,
+              onEachFeature: onEachFeature
+          }).addTo(map);
+      }
+
+      var chicago = L.geoJson(transit, {
+          style: style,
+          onEachFeature: onEachFeature
+      }).addTo(map);
+
+      function updateOpacity(value) {
+          chicago.setStyle({opacity: value, fillOpacity: value});
+      }
+
+    </script>
+  </body>
 </html>
