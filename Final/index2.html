@@ -72,8 +72,14 @@
             map.addControl(new DescriptionControl());
 
             function onLoadData(data) {
-                timeline = L.timeline(data, {
-                    style: function (data) {
+                var timeline = L.timeline(data, {
+                    getInterval: function(feature) {
+                        return {
+                            start: feature.properties.time,
+                            end: feature.properties.time
+                        };
+                    },
+                    style: function(data) {
                         return {
                             stroke: false,
                             color: "#404040",
@@ -82,21 +88,27 @@
                     },
                     waitToUpdateMap: true,
                     onEachFeature: function (feature, layer) {
-                        layer.bindTooltip('<h3>'+ feature.properties.Data_name10 + '</h3> <p>' + ' <br>Unemployment Rate: <strong>' +
-                            feature.properties.Data_DP03 + '</strong> <br>Share of Public Transit Commuters: <strong>' + feature.properties.Data_DP_01 + '</strong></p>');
-                        },
-                    });
-                    var timelineControl = L.timelineSliderControl({
-                        formatOutput: function (timestamp) {
-                            var date = new Date(timestamp);
-                            return date.toLocaleDateString();
-                        },
-                        enableKeyboardControls: true,
-                    });
-                    timeline.addTo(map);
-                    timelineControl.addTo(map);
-                    timelineControl.addTimelines(timeline);
-                }
+                        layer.bindTooltip('<h3>' + feature.properties.Data_name10 + '</h3><p>' + 
+                                          'Unemployment Rate: <strong>' + feature.properties.Data_DP03 + '</strong><br>' +
+                                          'Share of Public Transit Commuters: <strong>' + feature.properties.Data_DP_01 + '</strong></p>');
+                    },
+                });
+                
+                var timelineControl = L.timelineSliderControl({
+                    formatOutput: function (timestamp) {
+                        var date = new Date(timestamp);
+                        return date.toLocaleDateString();
+                    },
+                    enableKeyboardControls: true,
+                    duration: 100000, // Adjust the duration to your needs
+                    autoPlay: true,
+                    showTicks: true
+                });
+                
+                timeline.addTo(map);
+                timelineControl.addTo(map);
+                timelineControl.addTimelines(timeline);
+            }
             </script>
             <script src="https://Ldepablo11.github.io/Final/Mismatch.jsonp"></script>
         </body>
