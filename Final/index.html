@@ -180,25 +180,26 @@
 	      }
       });
 
-      var searchOptions = {
-	      position: 'topleft',
-	      title: 'Search',
-	      placeholder: 'Search by Census Tract Name',
-	      maxResultLength: 10,
-	      caseSensitive: false,
-	      showInvisibleFeatures: true,
-	      layerToToggle: searchLayer,
-	      threshold: 0.5,
-	      showResultFct: function(feature, container) {
-		      var props = feature.properties;
-		      var name = L.DomUtil.create('b', null, container);
-		      name.innerHTML = props.Data_name10;
-		      container.appendChild(L.DomUtil.create('br', null, container));
-		      var cat = props.Data_name10 ? props.Data_name10 : props.Data_name10,
-			      info = cat;
-		      container.appendChild(document.createTextNode(info));
-	      }
-      };
+     var searchOptions = {
+            position: 'topleft',
+            title: 'Search',
+            placeholder: 'Example: Mount Pleasant',
+            maxResultLength: 10,
+            caseSensitive: false,
+            showInvisibleFeatures: true,
+            layerToToggle: searchLayer,
+            threshold: 0.5, // default is .5, will match imperfect results
+            showResultFct: function (feature, container) {
+                props = feature.properties;
+                var name = L.DomUtil.create('b', null, container);
+                name.innerHTML = props.geoid10;
+                container.appendChild(L.DomUtil.create('br', null, container));
+
+                var cat = props.geoid10 ? props.geoid10 : props.geoid10,
+                    info = cat;
+                container.appendChild(document.createTextNode(info));
+	    }
+     };
 
       var searchControl = L.control.fuseSearch(searchOptions);
 
