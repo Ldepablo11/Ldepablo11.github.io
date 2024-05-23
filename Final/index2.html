@@ -86,9 +86,10 @@
                             feature.properties.Data_DP03 + '</strong> <br>Share of Public Transit Commuters: <strong>' + feature.properties.Data_DP_01 + '</strong></p>');
                         },
                     });
-                    timelineControl = L.timelineSliderControl({
-                        formatOutput: function (date) {
-                            return new Date(date).toLocaleDateString();
+                    var timelineControl = L.timelineSliderControl({
+                        formatOutput: function (timestamp) {
+                            var date = new Date(timestamp);
+                            return date.toLocaleDateString();
                         },
                         enableKeyboardControls: true,
                     });
