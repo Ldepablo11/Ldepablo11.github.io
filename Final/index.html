@@ -237,38 +237,6 @@
 	      }
 	      return layer;
       };
-
-      var timelineControl = L.timelineSliderControl({
-	      formatOutput: function (time) {
-		      var d = new Date(time * 1000);
-		      return d.toLocaleDateString('en-US', {
-			      year: 'numeric',
-			      month: 'short',
-			      day: 'numeric',
-			      timeZone: 'UTC'
-		      });
-	      },
-	      duration: 150000
-      });
-
-      var timelineControl;
-
-      function onLoadData(data) {
-	      var getInterval = function (data) {
-		      return {
-			      start: data.properties.start,
-			      end: data.properties.end,
-		      };
-	      };
-	      
-	      var timeline = L.timeline(data, {
-		      getInterval: getInterval
-	      });
-	      timelineControl.addTo(map);
-	      timelineControl.addTimelines(timeline);
-	      timeline.addTo(map);
-      }
-      onLoadData(transit);
     </script>
   </body>
 </html>
